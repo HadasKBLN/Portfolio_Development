@@ -7,7 +7,7 @@ pipeline{
         }
 
         stage('Unit test'){
-
+            sh ' docker exec -it flask sh '
         }
 
         stage('Tagging'){
