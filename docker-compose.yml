@@ -1,6 +1,7 @@
 version: '3'
 services:
     flask:
+        build: app/.
         image: server:1.0
         container_name: flask
         environment:
