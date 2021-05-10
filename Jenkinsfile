@@ -2,14 +2,17 @@ pipeline{
     agent any
     stages{
         stage('Build'){
-            sh ' docker compose up --build '
-
+            steps{
+                sh ' docker compose up --build '
+            }
         }
 
         stage('Unit test'){
-            sh ' docker exec -it flask sh '
-            sh '  pytest -v > testResult.txt '
-            sh ' pytest -v | wc '
+            steps {
+                sh ' docker exec -it flask sh '
+                sh ' pytest -v > testResult.txt '
+                sh ' pytest -v | wc '
+            }
         }
 
         stage('Tagging'){
