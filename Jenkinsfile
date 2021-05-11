@@ -11,9 +11,8 @@ pipeline{
             steps {
                 sh '''
                  sleep 15
-                 docker exec -it flask sh  
-                 pytest -v > testResult.txt 
-                 docker compose down
+                 docker exec flask pytest -v > testResult.txt 
+                 ./test.sh
                  '''
             }
         }
