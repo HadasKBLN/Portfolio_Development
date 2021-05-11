@@ -12,6 +12,7 @@ pipeline{
                 sh '''
                  sleep 15
                  docker exec flask pytest -v > testResult.txt 
+                 chmod +x test.sh
                  ./test.sh
                  '''
             }
