@@ -16,10 +16,16 @@ pipeline{
         }
 
         stage('Tagging'){
+            steps{
+
+            }
 
         }
 
         stage('Publish'){
+            steps{
+                
+            }
 
         }
 
