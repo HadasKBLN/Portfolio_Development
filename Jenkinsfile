@@ -20,6 +20,7 @@ pipeline{
 
         stage('Tagging'){
             steps{
+                sh 'echo jj'
 
             }
 
@@ -27,6 +28,7 @@ pipeline{
 
         stage('Publish'){
             steps{
+                sh 'echo jj'
                 
             }
 
