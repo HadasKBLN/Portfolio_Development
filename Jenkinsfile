@@ -9,9 +9,12 @@ pipeline{
 
         stage('Unit test'){
             steps {
-                sh ' docker exec -it flask sh '
-                sh ' pytest -v > testResult.txt '
-                sh ' pytest -v | grep 12 '
+                sh '''
+                 sleep 5
+                 docker exec -it flask sh  
+                 pytest -v > testResult.txt 
+                 docker compose down
+                 '''
             }
         }
 
