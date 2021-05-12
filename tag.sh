@@ -6,7 +6,8 @@ gcloud auth configure-docker
 echo $BRANCH_NAME
 if [ "$BRANCH_NAME" = "main" ]; then
     export TAG="1.0.$BUILD_NUMBER"                         
-
+    echo "main"
+    echo $TAG
 elif [ "$BRANCH_NAME" = "dev" ]; then
     tag_tail=$(git rev-parse HEAD)
     export TAG="dev-$tag_tail"
