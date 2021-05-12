@@ -24,13 +24,8 @@ pipeline{
                 chmod +x tag.sh
                 ./tag.sh
                 '''
-
             }
-
         }
-
-
-
     }
 
     post{
