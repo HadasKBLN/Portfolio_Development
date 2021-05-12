@@ -3,7 +3,7 @@
 # add credHelpers 
 gcloud auth configure-docker
 export TAG=""
-
+echo $BRANCH_NAME
 if [ "$BRANCH_NAME" = "main" ]; then
     TAG="1.0.$BUILD_NUMBER"                         
 
