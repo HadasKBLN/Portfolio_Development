@@ -5,6 +5,7 @@ gcloud auth configure-docker
 export TAG=""
 echo $BRANCH_NAME
 if [ "$BRANCH_NAME" = "main" ]; then
+    echo "main"
     TAG="1.0.$BUILD_NUMBER"                         
 
 elif [ "$BRANCH_NAME" = "dev" ]; then
