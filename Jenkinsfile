@@ -10,7 +10,7 @@ pipeline{
         stage('Unit test'){
             steps {
                 sh '''
-                 sleep 35
+                 sleep 40
                  docker exec flask pytest -v > testResult.txt 
                  chmod +x test.sh
                  ./test.sh
