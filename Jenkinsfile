@@ -18,7 +18,7 @@ pipeline{
             }
         }
 
-        stage('Tagging'){
+        stage('Tag and Publish'){
             steps{
                 sh '''
                 chmod +x tag.sh
@@ -29,15 +29,6 @@ pipeline{
 
         }
 
-        stage('Publish'){
-            steps{
-                sh' echo publis'
-                sh ' echo $TAG'
-                // sh 'docker push eu.gcr.io/devops-portfolio/contact_manegment:$TAG'
-                
-            }
-
-        }
 
 
     }
