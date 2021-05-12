@@ -10,7 +10,7 @@ pipeline{
         stage('Unit test'){
             steps {
                 sh '''
-                 sleep 25
+                 sleep 35
                  docker exec flask pytest -v > testResult.txt 
                  chmod +x test.sh
                  ./test.sh
@@ -20,7 +20,10 @@ pipeline{
 
         stage('Tagging'){
             steps{
-                sh 'echo jj'
+                sh '''
+                chmod +x tag.sh
+                ./tag.sh
+                '''
 
             }
 
@@ -39,7 +42,11 @@ pipeline{
 
     post{
         always{
-            sh 'docker-compose down -v'
+            sh '''
+            chmod +x cleanUp.sh
+            ./cleanUp.sh
+            
+            '''
         }
     }
 }

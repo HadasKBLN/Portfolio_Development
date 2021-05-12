@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# add credHelpers 
+gcloud auth configure-docker
 
 if [ "$BRANCH_NAME" = "master" ]; then
     tag="1.0.$BUILD_NUMBER"
