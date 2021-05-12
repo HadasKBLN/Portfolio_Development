@@ -31,7 +31,7 @@ pipeline{
 
         stage('Publish'){
             steps{
-                sh 'echo jj'
+                sh 'docker push eu.gcr.io/devops-portfolio/contact_manegment:$TAG'
                 
             }
 
