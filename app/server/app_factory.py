@@ -20,7 +20,7 @@ def create_app(test_config=None):
         # a default secret that should be overridden by instance config
         SECRET_KEY="prod",
         MONGO_DBNAME = "contactdb",
-        MONGO_URI = "mongodb://admin:password@mongodb:27017/contactdb?authSource=admin"
+        MONGO_URI = "mongodb://mongodb:27017/contactdb?authSource=admin"
     )
 
     mongodb_client = PyMongo(app)
