@@ -22,7 +22,7 @@ pipeline{
             steps{
                 sh '''
                 chmod +x tag.sh
-                ./tag.sh
+                
                 '''
             }
         }
