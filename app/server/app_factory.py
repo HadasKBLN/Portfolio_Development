@@ -5,6 +5,7 @@ from flask_pymongo import PyMongo
 import json
 from flask import render_template
 from bson import ObjectId
+import logging
 
 class JSONEncoder(json.JSONEncoder):
     def default(self, o):
@@ -23,8 +24,17 @@ def create_app(test_config=None):
         MONGO_URI = "mongodb://mongodb:27017/contactdb?authSource=admin"
     )
 
-    mongodb_client = PyMongo(app)
-    db = mongodb_client.db
+    if not test_config:
+        logger = logging.getLogger("prod")
+    else:
+        logger = logging.getLogger("test")
+
+    try:
+        mongodb_client = PyMongo(app)
+        db = mongodb_client.db
+    except Exception as e:
+        logger.error("Could not connect to Mongo.\nException seen: " + str(e))
+
 
     if not test_config:
         contact_db = db.contacts;
@@ -42,6 +52,7 @@ def create_app(test_config=None):
         if contact:
             return jsonify(message="Contact with such ID already exist")
         contact_db.insert_one({'id': id, 'name': request.json['name'], 'number':request.json['number'], 'city': request.json['city']})
+        logging.info("Succesfully added new contact :" + id )
         return jsonify(message="New contact added succesfully!")
 
     # Update an existing contact
@@ -67,6 +78,7 @@ def create_app(test_config=None):
                 updated_contact['city'] = contact['city']
         
             result = contact_db.replace_one({'id': id}, updated_contact)
+            logging.info("Succesfully updated contact :" + id )
             return jsonify(message="Contact updated succesfully")
         else:
             return jsonify(message="No such contact. Enter id again")
@@ -78,6 +90,7 @@ def create_app(test_config=None):
         contact = contact_db.find_one({'id': id})
         if contact:
             deleted_contact = contact_db.delete_one({'id': id})
+            logging.info("Succesfully deleted contact :" + id )
             return jsonify(message="Contact deleted succesfully")
         else:
             return jsonify(message="Contact with such ID is not exist") 
