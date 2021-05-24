@@ -40,7 +40,7 @@ pipeline{
                 subject: "Job '${env.JOB_NAME} ${env.BUILD_NUMBER}'",
                 body: """<p>Check console output at <a href="${env.BUILD_URL}">${env.JOB_NAME}</a></p>""",
                 to: "hadas.kablan@develeap.com", 
-                attachLog: true, attachmentsPattern: 'generatedFile.txt'
+                attachLog: true, attachmentsPattern: 'testResult.txt'
             )
         }
     }
