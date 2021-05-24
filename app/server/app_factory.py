@@ -124,7 +124,7 @@ def create_app(test_config=None):
         if contact:
             return JSONEncoder().encode(contact)
         else:
-            return jsonify(message="Contact with such ID is not exist")
+            return jsonify(message="Contact with such ID is not exist.")
 
 
     """ Welcome """
