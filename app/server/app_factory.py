@@ -102,7 +102,7 @@ def create_app(test_config=None):
         if contact:
             deleted_contact = contact_db.delete_one({'id': id})
             logging.info("Succesfully deleted contact :" + id )
-            return jsonify(message="Contact deleted succesfully")
+            return jsonify(message="Contact deleted succesfully!")
         else:
             return jsonify(message="Contact with such ID is not exist") 
 
