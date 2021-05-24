@@ -44,7 +44,7 @@ def create_app(test_config=None):
         db = mongodb_client.db
         logger.info("Succesfully connected to MongoDB!")
     except Exception as e:
-        logger.error("Could not connect to Mongo.\nException seen: " + str(e))
+        logger.error("Could not connect to Mongo.\nException seen:" + str(e))
 
 
     if not app_env == "test":
