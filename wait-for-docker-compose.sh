@@ -6,7 +6,7 @@ is_healthy() {
     mongo_health_status="$(docker inspect -f "{{.State.Status}}" mongodb)"
     flask_health_status="$(docker inspect -f "{{.State.Status}}" flask)"
 
-    if [ "$proxy_health_status" = "rudnning" ] && [ "$mongo_health_status" = "running" ] && [ "$flask_health_status" = "running" ]; then
+    if [ "$proxy_health_status" = "running" ] && [ "$mongo_health_status" = "running" ] && [ "$flask_health_status" = "running" ]; then
         return 0
     else
         return 1
