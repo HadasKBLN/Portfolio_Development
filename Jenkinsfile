@@ -37,8 +37,8 @@ pipeline{
             
             '''
             emailext (
-                subject: "Job '${env.JOB_NAME} ${env.BUILD_NUMBER}'",
-                body: """<p>Check console output at <a href="${env.BUILD_URL}">${env.JOB_NAME}</a></p>""",
+                subject: "Job Status : '${env.JOB_NAME} ${env.BUILD_NUMBER}'",
+                body: """ Tests input in the atteched file.\nFor more information, check console output at <a href="${env.BUILD_URL}">${env.JOB_NAME}</a>""",
                 to: "hadas.kablan@develeap.com", 
                 attachLog: true, attachmentsPattern: 'testResult.txt'
             )
