@@ -90,9 +90,9 @@ def create_app(test_config=None):
         
             result = contact_db.replace_one({'id': id}, updated_contact)
             logging.info("Succesfully updated contact :" + id )
-            return jsonify(message="Contact updated succesfully")
+            return jsonify(message="Contact updated succesfully!")
         else:
-            return jsonify(message="No such contact. Enter id again")
+            return jsonify(message="No such contact. Enter id again.")
 
 
     """ Delete an existing contact """
