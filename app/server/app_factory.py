@@ -63,7 +63,7 @@ def create_app(test_config=None):
         if contact:
             return jsonify(message="Contact with such ID already exist.")
         contact_db.insert_one({'id': id, 'name': request.json['name'], 'number':request.json['number'], 'city': request.json['city']})
-        logging.info("Succesfully added new contact :" + id )
+        logging.info("Succesfully added new contact: " + id )
         return jsonify(message="New contact added succesfully!")
 
     """ Update an existing contact """
@@ -90,7 +90,7 @@ def create_app(test_config=None):
         
             result = contact_db.replace_one({'id': id}, updated_contact)
             logging.info("Succesfully updated contact :" + id )
-            return jsonify(message="Contact updated succesfully")
+            return jsonify(message="Contact updated succesfully!")
         else:
             return jsonify(message="No such contact. Enter id again")
 
