@@ -16,7 +16,8 @@ is_healthy() {
 timer=0
 while ! is_healthy; do 
     if [ $timer = $1 ]; then
-        echo "Docker-compose command didn't complete within 65 second. Check your code." > testResult.txt 
+        echo "Docker-compose command didn't complete within" $1 "second"
+        echo "Docker-compose command didn't complete within" $1 "second. Check your code." > testResult.txt 
         exit 1
     fi
     sleep 1
