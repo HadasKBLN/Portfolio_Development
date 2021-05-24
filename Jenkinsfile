@@ -10,6 +10,7 @@ pipeline{
         stage('Unit test'){
             steps {
                 sh '''
+                 chmod +x wait-for-it.sh
                  ./wait-for-it.sh localhost:80 --timeout=65
                  status=$?
                  if[ "$status" = "0" ]; then 
