@@ -10,17 +10,11 @@ pipeline{
         stage('Unit test'){
             steps {
                 sh '''
-                 chmod +x wait-for-it.sh
-                 ./wait-for-it.sh localhost:80 --timeout=65
-                 status=$?
-                 if[ "$status" = "0" ]; then 
+                 chmod +x ./wait-for-docker-compose.sh
+                 ./wait-for-docker-compose.sh 65
+                 
                     docker exec flask pytest -v > testResult.txt 
                     chmod +x test.sh
-                    ./test.sh
-                 else
-                    echo "Docker-compose command didn't complete within 65 second. Check your code." > testResult.txt 
-                    exit 1
-                 fi
                  '''
             }
         }
