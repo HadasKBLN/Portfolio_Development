@@ -40,6 +40,7 @@ pipeline{
                 subject: "Job Status : '${env.JOB_NAME} ${env.BUILD_NUMBER}'",
                 body: """ Tests input in the atteched file.\nFor more information, check console output at <a href="${env.BUILD_URL}">${env.JOB_NAME}</a>""",
                 to: "hadas.kablan@develeap.com", 
+                from: "hadasmazoozb@gmail.com",
                 attachLog: true, attachmentsPattern: 'testResult.txt'
             )
         }
