@@ -6,6 +6,7 @@ import json
 from flask import render_template
 from bson import ObjectId
 import logging
+import os
 
 class JSONEncoder(json.JSONEncoder):
     def default(self, o):
@@ -17,31 +18,41 @@ def create_app(test_config=None):
 
     """Create and configure an instance of the Flask application."""
     app = Flask(__name__, instance_relative_config=True)
+
+    app_env = os.environ.get("APP_ENV")
+    logger = logging.getLogger(app_env) 
+    secret_key = os.environ.get("SECRETKEY")
+
+    mongodb = {}
+    mongodb["username"] = os.environ.get("MONGODB_USERNAME")
+    mongodb["password"] = os.environ.get("MONGODB_PASSWORD")
+    mongodb["hostname"] = os.environ.get("MONGODB_HOSTNAME")
+    mongodb["urlsuffix"] = os.environ.get("MONGODB_URL_SUFFIX")
+    mongodb["dbname"] = os.environ.get("contactdb")
+
+    mongo_uri = "mongodb://"+mongodb["username"]+":"+mongodb["password"]+"@"+mongodb["hostname"]+":27017/contactdb?"+mongodb["urlsuffix"]
+
     app.config.from_mapping(
-        # a default secret that should be overridden by instance config
-        SECRET_KEY="prod",
-        MONGO_DBNAME = "contactdb",
-        MONGO_URI = "mongodb://mongodb:27017/contactdb?authSource=admin"
+        SECRET_KEY=secret_key,
+        MONGO_DBNAME = mongodb["dbname"],
+        MONGO_URI = mongo_uri
     )
-
-    if not test_config:
-        logger = logging.getLogger("prod")
-    else:
-        logger = logging.getLogger("test")
-
+    
+    """Try connecting to mongoDB"""
     try:
         mongodb_client = PyMongo(app)
         db = mongodb_client.db
+        logger.info("Succesfully connected to MongoDB!")
     except Exception as e:
         logger.error("Could not connect to Mongo.\nException seen: " + str(e))
 
 
-    if not test_config:
-        contact_db = db.contacts;
+    if not app_env == "test":
+        contact_db = db.contacts
     else:
-        contact_db = db.test_contacts;
+        contact_db = db.test_contacts
 
-    # Add a new contact
+    """ Add a new contact """
     @app.route('/person/<string:id>', methods=['POST'])
     def add_contact(id):
         if not request.data:
@@ -55,7 +66,7 @@ def create_app(test_config=None):
         logging.info("Succesfully added new contact :" + id )
         return jsonify(message="New contact added succesfully!")
 
-    # Update an existing contact
+    """ Update an existing contact """
     @app.route('/person/<string:id>', methods=['PUT'])
     def update_contact(id):
         contact = contact_db.find_one({'id': id})
@@ -84,7 +95,7 @@ def create_app(test_config=None):
             return jsonify(message="No such contact. Enter id again")
 
 
-    # Delete an existing contact
+    """ Delete an existing contact """
     @app.route('/person/<string:id>', methods=['DELETE'])
     def delete_contact(id):
         contact = contact_db.find_one({'id': id})
@@ -96,7 +107,7 @@ def create_app(test_config=None):
             return jsonify(message="Contact with such ID is not exist") 
 
 
-    # Get all contacts
+    """ Get all contacts """
     @app.route('/person', methods=['GET'])
     def get_all_contacts():
         contacts = contact_db.find()
@@ -106,7 +117,7 @@ def create_app(test_config=None):
         return jsonify(contacts_list)
 
 
-    # Get contact with a given ID
+    """ Get contact with a given ID """
     @app.route('/person/<string:id>', methods=['GET'])
     def get_person(id):
         contact = contact_db.find_one({"id": id})
@@ -116,7 +127,7 @@ def create_app(test_config=None):
             return jsonify(message="Contact with such ID is not exist")
 
 
-    # Welcome
+    """ Welcome """
     @app.route('/', methods=['GET'])
     def index():
         return render_template("index.html")
@@ -124,6 +135,3 @@ def create_app(test_config=None):
     return app
 
 
-if __name__ == '__main__':
-    app = create_app()
-    app.run(debug=True, host='0.0.0.0')

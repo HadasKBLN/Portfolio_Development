@@ -1,0 +1,8 @@
+mongodb:
+  hostname: mongodb
+  username: admin
+  password: password
+  urlsuffix: authSource=admin
+  dbname: test_contacts
+secretkey: 'SECRETKEY'
+logger: test

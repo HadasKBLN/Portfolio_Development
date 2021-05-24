@@ -1,0 +1,8 @@
+mongodb:
+  hostname: 'MONGOHOST'
+  username: 'MONGOUSERNAME'
+  password: 'MONGOPASSWORD'
+  urlsuffix: 'MONGODBURLSUFFIX'
+  dbname: 'DBNAME'
+secretkey: 'SECRETKEY'
+logger: 'LOGGER'
