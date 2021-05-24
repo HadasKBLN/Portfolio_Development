@@ -92,7 +92,7 @@ def create_app(test_config=None):
             logging.info("Succesfully updated contact :" + id )
             return jsonify(message="Contact updated succesfully")
         else:
-            return jsonify(message="No such contact. Enter id again")
+            return jsonify(message="No such contact. Enter id again.")
 
 
     """ Delete an existing contact """
