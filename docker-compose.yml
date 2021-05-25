@@ -1,5 +1,24 @@
 version: '3'
 services:
+
+    mongodb:
+        image: mongo:4.0.8
+        container_name: mongodb
+        restart: unless-stopped
+        command: mongod --auth
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: admin
+            MONGO_INITDB_ROOT_PASSWORD: password
+            MONGO_INITDB_DATABASE: contactdb
+            MONGO_DBNAME: contactdb
+        ports:
+            - 27017:27017
+        volumes:
+        - ./DB/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+        - mongodbdata:/data/db
+        networks:
+            db:
+
     flask:
         build: app/.
         image: server:1.0
@@ -19,25 +38,8 @@ services:
         depends_on:
         - mongodb
         networks:
-            contact_network:
-
-    mongodb:
-        image: mongo:4.0.8
-        container_name: mongodb
-        restart: unless-stopped
-        command: mongod --auth
-        environment:
-            MONGO_INITDB_ROOT_USERNAME: admin
-            MONGO_INITDB_ROOT_PASSWORD: password
-            MONGO_INITDB_DATABASE: contactdb
-            MONGO_DBNAME: contactdb
-        ports:
-            - 27017:27017
-        volumes:
-        - ./DB/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
-        - mongodbdata:/data/db
-        networks:
-            contact_network:
+            frontend:
+            db:
 
     proxy:
         build: proxy
@@ -45,13 +47,14 @@ services:
         ports:
             - "80:80"
         networks:
-            contact_network:
+            frontend:
         depends_on:
             - flask
 
 
 networks:
-    contact_network:
+    frontend:
+    db:
 volumes:
     mongodbdata:
     appdata:
