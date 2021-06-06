@@ -30,7 +30,7 @@ pipeline{
     }
 
     post{
-        always{
+        cleanup{
             sh '''
             chmod +x cleanUp.sh
             ./cleanUp.sh
